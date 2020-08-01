@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
+/**
+ * try()在小括号里实现某个类，这个类实现了AutoCloseable接口，程序执行完了就不用主动调用关闭方法了，程序可以自动实现。
+ */
 @RestController
 public class UnLockTestController {
 
