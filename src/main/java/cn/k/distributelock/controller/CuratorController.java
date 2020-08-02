@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 使用curator技术实现zookeeper的分布式锁。CuratorFramework 在主启动类中注入的。
+ */
 @RestController
 public class CuratorController {
 
