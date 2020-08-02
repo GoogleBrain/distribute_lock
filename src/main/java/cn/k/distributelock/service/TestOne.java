@@ -20,7 +20,7 @@ public class TestOne {
     @Autowired
     private RedisTemplate redisTemplate;
 
-//    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0/5 * * * * ?")
     public void sendMsg() {
         String key = "redisKey";
         String value = UUID.randomUUID().toString();
@@ -39,9 +39,9 @@ public class TestOne {
         };
         boolean execute = (boolean) redisTemplate.execute(redisCallback);
         if (execute) {
-            System.out.println("我进入了锁test one。。。。。"+new Date());
+            System.out.println("我进入了锁test one。。。。。" + new Date());
             try {
-                System.out.println("发送短信给test one1760031xxxx");
+                System.out.println("发送短信给test one1760031xxxx" + new Date());
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -53,10 +53,11 @@ public class TestOne {
                 RedisScript<Boolean> redisScript = RedisScript.of(script, Boolean.class);
                 List keys = Arrays.asList(key);
                 Boolean execute1 = (Boolean) redisTemplate.execute(redisScript, keys, value);
-                System.out.println("释放锁得结果test one" + execute1);
+                System.out.println("释放锁得结果test one" + execute1 + new Date());
             }
         } else {
-            System.out.println("获得锁失败test one>>>>>");
+            System.out.println("获得锁失败test one>>>>>" + new Date());
         }
+        System.out.println("---------------------------------");
     }
 }
