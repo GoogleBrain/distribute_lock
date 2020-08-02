@@ -13,10 +13,11 @@ public class UnLockTestController {
 
     @RequestMapping("/king")
     public  String nowTime(){
-        try(AutounLockTest test = new AutounLockTest("asd")){
+        try(AutounLockTest test = new AutounLockTest("aaaa")){
           if(test.getLock().equals("asd")){
               System.out.println("我获取到了名字>>..........");
           }else{
+              System.out.println("程序出错了。。。。。。。");
               int b=10/0;
           }
         }catch (Exception e) {

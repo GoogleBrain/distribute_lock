@@ -1,35 +1,31 @@
-package cn.k.distributelock.controller;
+package cn.k.distributelock.service;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisStringCommands;
 import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.data.redis.core.types.Expiration;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
-public class RedisDistributeController {
+@Service
+public class TestOne {
 
-    @Resource
+    @Autowired
     private RedisTemplate redisTemplate;
 
-    @RequestMapping("/redislock")
-    public String redisLock() {
-        System.out.println("进入了方法");
-
+    @Scheduled(cron = "0/5 * * * * ?")
+    public void sendMsg() {
         String key = "redisKey";
         String value = UUID.randomUUID().toString();
 
         RedisCallback redisCallback = redisConnection -> {
-
             //设置NX
             RedisStringCommands.SetOption option = RedisStringCommands.SetOption.ifAbsent();
             //设置过期时间
@@ -43,9 +39,9 @@ public class RedisDistributeController {
         };
         boolean execute = (boolean) redisTemplate.execute(redisCallback);
         if (execute) {
-            System.out.println("我进入了锁。。。。。");
+            System.out.println("我进入了锁test one。。。。。"+new Date());
             try {
-                Thread.sleep(15000);
+                System.out.println("发送短信给test one1760031xxxx");
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -57,13 +53,10 @@ public class RedisDistributeController {
                 RedisScript<Boolean> redisScript = RedisScript.of(script, Boolean.class);
                 List keys = Arrays.asList(key);
                 Boolean execute1 = (Boolean) redisTemplate.execute(redisScript, keys, value);
-                System.out.println("释放锁得结果" + execute1);
+                System.out.println("释放锁得结果test one" + execute1);
             }
-        }else{
-            System.out.println("获得锁失败>>>>>");
+        } else {
+            System.out.println("获得锁失败test one>>>>>");
         }
-
-
-        return "执行完成";
     }
 }
