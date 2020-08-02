@@ -20,7 +20,10 @@ public class TestOne {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+    /**
+     * 定时任务先暂时去掉，要不然程序一直跑。启动的时候把注释去掉。
+     */
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void sendMsg() {
         String key = "redisKey";
         String value = UUID.randomUUID().toString();
