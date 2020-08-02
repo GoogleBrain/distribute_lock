@@ -20,7 +20,7 @@ public class TestOne {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void sendMsg() {
         String key = "redisKey";
         String value = UUID.randomUUID().toString();
